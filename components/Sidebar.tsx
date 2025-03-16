@@ -1,111 +1,145 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 import {
-  Bot,
-  BriefcaseBusiness,
-  Building,
-  File,
-  FolderKanban,
-  ImageIcon,
-  LayoutDashboard,
-  LineChart,
+  Home,
+  Compass,
+  Brain,
+  Mic,
+  Code,
+  Video,
+  Layers,
   LogOut,
-  MessageSquare,
-  Music,
-  PencilLine,
-  Settings,
-  Users,
-  VideoIcon,
+  Wallet,
 } from "lucide-react";
-import { User } from "@clerk/nextjs/server";
-import { UserButton } from "@clerk/nextjs";
-import { IconJoinBevel, IconShoppingBagDiscount } from "@tabler/icons-react";
-import { FaRobot } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
 const routes = [
   {
-    label: "Get Brands",
-    icon: Building, // Make sure to replace this with your actual icon
-    href: "/brand",
-    color: "text-purple-500",
+    label: "Home",
+    icon: Home,
+    href: "/",
   },
   {
-    label: "My Collaborations",
-    icon: Users, // Replace with the actual icon
-    href: "/collaborations",
-    color: "text-indigo-600",
+    label: "AR Learning",
+    icon: Compass,
+    href: "/ar-learning",
   },
   {
-    label: "Ai Tools",
-    icon: Bot, // Replace with the actual icon
-    href: "/analytics",
-    color: "text-yellow-500",
-  },
-  // New section for brand managers
-  {
-    label: "Recruitment",
-    icon: BriefcaseBusiness, // Replace with the actual icon
-    href: "/recruitemnt",
-    color: "text-red-500",
+    label: "AI Voice Assistant",
+    icon: Mic,
+    href: "/voice-assistant",
   },
   {
-    label: "Manage",
-    icon: PencilLine, // Replace with the actual icon
-    href: "/manage",
-    color: "text-teal-600",
+    label: "Practice Sessions",
+    icon: Code,
+    href: "/practice",
   },
+  {
+    label: "AI Visualizer",
+    icon: Video,
+    href: "/visualizer",
+  },
+  {
+    label: "AI Quiz Generator",
+    icon: Brain,
+    href: "/quiz",
+  }
 ];
 
 const Sidebar = () => {
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <div className="space-y-4 py-4 pt-14 flex flex-col h-full bg-zinc-900 text-white">
-      <div className="px-6 py-2 flex-1 ">
-        <div style={{ pointerEvents: "none" }} />
-        <Link href="/dashboard" className="flex items-center pl-3 mb-14">
-          <div className="relative h-8 w-8 mr-4">
-            {/* <Image fill alt="Logo" src="/logo.png" /> */}
-          </div>
-          <h1 className={cn("text-2xl font-bold", montserrat.className)}>
-            TalentLink
-          </h1>
-        </Link>
-        <div className="space-y-7">
-          {routes.map((route) => (
-            <Link
-              href={route.href}
-              key={route.href}
-              className="text-lg group 
-              flex p-5  gap-3 w-full justify-start 
-              font-medium cursor-pointer
-               hover:text-white bg-white/5 hover:bg-white/10 
-               rounded-lg transition "
-            >
-              <div style={{ pointerEvents: "none" }}></div>
-              <div className="flex items-center flex-1">
-                <route.icon className={cn("h-7 w-9 mr-3", route.color)} />
-                {route.label}
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div className="relative h-full overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[#1a1a1a] opacity-95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#DFFE00]/10 to-transparent" />
+        <div className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(223, 254, 0, 0.1) 1px, transparent 1px)`,
+            backgroundSize: '24px 24px'
+          }}
+        />
       </div>
-      <div className="p-4">
-        <Link
-          href="/"
-          key="/"
-          className="text-lg group 
-              flex p-5  gap-3 w-full justify-start 
-              font-medium cursor-pointer
-               hover:text-white bg-white/5 hover:bg-white/10 
-               rounded-lg transition "
-        >
-          <LogOut className={cn("h-7 w-9 mr-3", "text-zinc-100")} />
-          Sign out
-        </Link>
+
+      {/* Content */}
+      <div className="relative z-10 space-y-4 py-4 flex flex-col h-full backdrop-blur-sm">
+        <div className="px-6 py-2 flex-1">
+          {/* Logo Section with Animation */}
+          <div className="flex flex-col items-center justify-center mb-8 text-center">
+            <h1
+              className={cn(
+                "text-4xl font-bold text-[#DFFE00] ",
+                mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+                montserrat.className
+              )}
+            >
+              NYC
+            </h1>
+            <span
+              className={cn(
+                "text-xs text-white/70 mt-1 transition-all duration-700",
+                mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+              )}
+            >
+              not your class
+            </span>
+          </div>
+
+          {/* Wallet Connect Button */}
+          <button
+            className="relative w-full mb-8 px-4  py-3 bg-[#212121] hover:bg-[#DFFE00] rounded-lg 
+                     flex items-center justify-center gap-2 text-white hover:text-black font-medium 
+                     transition-all duration-300 hover:shadow-[0_0_15px_rgba(223,254,0,0.5)]
+                     border border-[#DFFE00]/20 group"
+          >
+            <Wallet className="h-5 w-5 relative z-10" />
+            <span className="relative z-10">Wallet Connect</span>
+          </button>
+
+          {/* Navigation Links */}
+          <div className="space-y-1">
+            {routes.map((route) => (
+              <Link
+                key={route.href}
+                href={route.href}
+                className={cn(
+                  "relative w-full text-[15px] flex p-3 gap-3 mb-4 items-center font-medium cursor-pointer rounded-lg transition-all duration-300 border border-[#DFFE00]/20 group ",
+                  pathname === route.href
+                    ? "bg-[#DFFE00] text-black border-[#DFFE00] shadow-[0_0_15px_rgba(223,254,0,0.5)]"
+                    : "text-white  bg-[#212121] hover:bg-[#DFFE00] border border-[#DFFE00]/20 group hover:text-black hover:shadow-[0_0_15px_rgba(223,254,0,0.5)]"
+                )}
+              >
+                <route.icon className="h-5 w-5" />
+                <span>{route.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="px-6">
+          <button
+            className="relative w-full p-3 flex items-center gap-3 text-white bg-[#212121] 
+                     hover:bg-[#DFFE00] hover:text-black rounded-lg transition-all duration-300 
+                     hover:shadow-[0_0_15px_rgba(223,254,0,0.5)] border border-[#DFFE00]/20"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   );
